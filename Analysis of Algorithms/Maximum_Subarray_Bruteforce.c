@@ -19,7 +19,7 @@ int main()
         printf("%d,",A[k]);
     printf("\n");
     int lengthof_A = sizeof(A) / sizeof(A[0]);
-    tmp = FIND_MAXIMUM_SUBARRAY( A,0,(lengthof_A-1));
+    tmp = FIND_MAXIMUM_SUBARRAY( A,0,(lengthof_A));
     printf("left: %d,right: %d,sum: %d",tmp.left, tmp.right, tmp.sum);
     return 0;
 }

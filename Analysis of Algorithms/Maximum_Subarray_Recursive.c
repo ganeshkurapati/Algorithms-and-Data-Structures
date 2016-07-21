@@ -15,7 +15,8 @@ int main()
 {
     int k ;
     sub_array tmp;
-    int A[11]={-5,9,7,999,37,88,222,335,-1,0,-1};
+    //int A[11]={-5,9,7,999,37,88,222,335,-1,0,-1};
+    int A[1] = {-1};
     for(k=0; k < (sizeof(A) / sizeof(A[0]));k++)
         printf("%d,",A[k]);
     printf("\n");
