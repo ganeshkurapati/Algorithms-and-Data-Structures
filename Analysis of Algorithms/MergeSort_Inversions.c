@@ -6,8 +6,7 @@ int merge(int *At,int p,int q,int r);
 int main()
 {
     int k ,inversions;
-    //int A[11]={143,9,7,999,37,88,222,335,66,0,0};
-    int A[9]={14,2,3,4,5,6,7,8,9};
+    int A[11]={143,9,7,999,37,88,222,335,66,0,0};
     for(k=0; k < (sizeof(A) / sizeof(A[0]));k++)
         printf("%d,",A[k]);
     printf("\n");
