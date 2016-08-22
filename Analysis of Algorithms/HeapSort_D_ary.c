@@ -2,27 +2,25 @@
 #include <stdlib.h>
 #include <limits.h>
 
-#define PARENT(i) ((i - 1) / 2)
-#define LEFT(i)   (2 * i + 1)
-#define RIGHT(i)  (2 * i + 2)
+#define PARENT(i, d) ((i - 1) / d)
+#define CHILD(i, d, c) (d * i + c + 1)
 
 typedef struct {
-    int *data ;
+    int *data;
     int length;
     int heap_size;
+    int child_no;
 } heap;
 
 void MAX_HEAPIFY (heap *A, int i)
 {
-    int l = LEFT(i);
-    int r = RIGHT(i);
-    int largest;
-    if ((l< A->heap_size) && (A->data[l]>A->data[i]))
-        largest = l;
-    else
-        largest = i;
-    if ((r< A->heap_size) && (A->data[r]>A->data[largest]))
-        largest = r;
+    int largest = i,k,child;
+    for(k =0;k < A->child_no;k++)
+    {
+        child = CHILD(i, A->child_no, k);
+        if ((child < A->heap_size) && (A->data[child]>A->data[largest]))
+            largest = child;
+    }
     if (largest != i)
     {
         int tmp = A->data[i];
@@ -58,14 +56,12 @@ void HEAP_INCREASE_KEY (heap *A, int i, int key)
          printf("Error: new key is smaller than current key");
          exit(0);
     }
-    A->data[i] = key;
-    while (i > 0 && (A->data[PARENT(i)] < A->data[i]))
+    while (i > 0 && (A->data[PARENT(i, A->child_no)] < key))
     {
-        int tmp = A->data[i];
-        A->data[i] = A->data[PARENT(i)];
-        A->data[PARENT(i)] = tmp;
-        i = PARENT(i);
+        A->data[i] = A->data[PARENT(i, A->child_no)];
+        i = PARENT(i, A->child_no);
     }
+    A->data[i] = key;
 }
 
 void MAX_HEAP_INSERT (heap *A, int key)
@@ -88,7 +84,7 @@ void intialize_heap(heap *A, int len)
 
 int main()
 {
-    heap A = {NULL,0,0};
+    heap A = {NULL,0,0,3};
     intialize_heap(&A,10);
     MAX_HEAP_INSERT(&A,143);
     MAX_HEAP_INSERT(&A,9);
@@ -105,8 +101,8 @@ int main()
         printf("%d,",A.data[k]);
     printf("\n");
     //MAX_HEAP_INSERT(&A,0);
-    //HEAP_INCREASE_KEY(&A,9,1000);
-    printf("%d \n",HEAP_MAXIMUM(&A));
+    //HEAP_INCREASE_KEY(&A,8,10);
+    //printf("%d \n",HEAP_MAXIMUM(&A));
     printf("%d \n",HEAP_EXTRACT_MAX(&A));
     printf("%d \n",HEAP_EXTRACT_MAX(&A));
     for(k=0; k < A.length;k++)
